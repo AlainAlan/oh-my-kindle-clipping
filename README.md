@@ -15,6 +15,10 @@
 
 ![graph_view_demo](./Obsidian_Graph-view_demo_detail.png)
 
+### 需要搞
+
+- [ ] 第一次没标全第二次重复标记会有两条记录,根据字符串start with的关系和位置/页码去重
+
 ## Demo
 
 ![snipaste](./snipaste.png)
