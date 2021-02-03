@@ -11,6 +11,10 @@
 `UnicodeEncodeError: 'gbk' codec can't encode character '\xc0' in position 216: illegal multibyte sequence`
 7. 原作者🐂🍺
 
+### 网络Demo（Obsidian）
+
+![graph_view_demo](./Obsidian_Graph-view_demo_detail.png)
+
 ## Demo
 
 ![snipaste](./snipaste.png)
