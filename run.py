@@ -204,18 +204,22 @@ def json_to_md(work_path, ticks):
         '''
         书名作者
         '''
-        book_md = '# ' + name + '\n\n' + '## ' + writer + '\n\n'
+        # book_md = '# ' + name + '\n\n' + '## ' + writer + '\n\n'
+        book_md = '# ' + name + '\n\n' + '**' + writer + '**' + '\n\n'
+        # 作者改成了加粗，而非二级标题
 
         for j in range(len(book_json[i]['note'])):
             if book_json[i]['note'][j]['body'] != '':
-                book_md = book_md + str(time.strftime("%Y-%m-%d %a %H:%M", time.localtime(
+                # 我改了这里。这是个人常用的monthly note，如果你常用daily note（有同名插件），可以把“]]”放在“%d”之后
+                book_md = book_md + str(time.strftime("[[%Y-%m]]-%d %a %H:%M", time.localtime(
                     book_json[i]['note'][j]['time']))) + ' | '  # 时间
                 if book_json[i]['note'][j]['page'] != -1:
                     book_md = book_md + 'P' + \
                         str(book_json[i]['note'][j]['page']) + ' | '  # 页码
                 if book_json[i]['note'][j]['content_start'] != -1:
-                    book_md = book_md + '#' + \
+                    book_md = book_md + '# ' + \
                         str(book_json[i]['note'][j]
+                            # 这里#之后加了个空格，否则会在Obsidian被误认为是标签
                             ['content_start']) + '-'  # 起始位置
                 if book_json[i]['note'][j]['content_end'] != -1:
                     book_md = book_md + \
@@ -223,11 +227,15 @@ def json_to_md(work_path, ticks):
                             ['content_end']) + '\n\n'  # 终止位置
                 else:
                     book_md = book_md + '\n\n'
-                book_md = book_md + '**' + \
-                    book_json[i]['note'][j]['body'] + '**' + '\n\n'  # 正文
+                book_md = book_md + '> ' + \
+                    book_json[i]['note'][j]['body'] + '\n\n'  # 正文
+                    # 这里从**加粗**改成了>引用
             else:
                 continue
-        with open(os.path.join(work_path, str(ticks), file_name + '.md'), 'w') as f:
+        book_md = book_md + "#MyClippings"
+        # 这里加入了标签。在新版Obsidian的网络视图中，可以选择开启或关闭标签的显示。在显示标签的情况下，可以纵览所有从My Clippings中导出的md文件
+        with open(os.path.join(work_path, str(ticks), file_name + '.md'), 'w', encoding = 'utf8') as f:
+            # 这里指定了编码，我也不知道有没有用，以防万一又gbk报错了
             print(book_md, file=f)
 
 
